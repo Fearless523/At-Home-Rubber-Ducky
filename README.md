@@ -39,7 +39,7 @@ Go to https://github.com/MTK911/Attiny85/tree/master/payloads, and click Wi-Fi P
 
 Go to https://webhook.site and get your own personalized webhook uri. Replace https://webhook.site/<ADD-WEBHOOK-ADDRESS-HERE> with your specific address
   
-### Step Seven: Almost to the Fun Part
+### Step Seven: Now the Fun Part!
   
   From here, you want to Verify the Payload inside of Arduino, then click upload. After you click upload, plug in the Attiny85 Micro USB, and it will copy the code over. Once done, unplug the Micro USB, close Arduino, bring up your webhook.site URL, and plug back in the Attiny85 Micro USB. You will see some action, and finally, have Wi-Fi credentials in plain text. The entire process will take about 20 seconds. Enjoy!
 
